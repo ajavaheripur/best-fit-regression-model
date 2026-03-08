@@ -40,9 +40,9 @@ if not intenv:
 	matplotlib.use("TkAgg")
     
 
-# ==========================
+#==========================
 # Model functions
-# ==========================
+#==========================
 def linear_func(x, m, b):
     return m * x + b
 
@@ -61,14 +61,14 @@ def format_equation(name, params=None):
         if name == "Linear":
             m, b = params
             b_sign = "+" if b >= 0 else "-"
-			b = abs(b)
+            b = abs(b)
             return f"y = {m:.5f}x {b_sign} {b:.5f}"
         elif name == "Quadratic":
             a, b, c = params
             b_sign = "+" if b >= 0 else "-"
             c_sign = "+" if c >= 0 else "-"
-			b = abs(b)
-			c = abs(c)
+            b = abs(b)
+            c = abs(c)
             return f"y = {a:.5f}x² {b_sign} {b:.5f}x {c_sign} {c:.5f}"
         elif name == "Exponential":
             a, b = params
@@ -77,7 +77,7 @@ def format_equation(name, params=None):
         elif name == "Logarithmic":
             a, b = params
             b_sign = "+" if b >= 0 else "-"
-			b = abs(b)
+            b = abs(b)
             return f"y = {a:.5f} ln(x) {b_sign} {b:.5f}"
         else:
             return "Unknown model"
@@ -277,12 +277,11 @@ def plot_model(name, func, params, r2):
         plt.ylabel("Residual")
 
         plt.tight_layout()
-		if intenv:
-			plt.show()
-		else:
-			plt.show(block=False)
-			plt.pause(0.1)
-
+        if intenv:
+            plt.show()
+        else:
+            plt.show(block=False)
+            plt.pause(0.1)
     except Exception as e:
         print(f"[!] Error plotting model {name}: {e}")
 
