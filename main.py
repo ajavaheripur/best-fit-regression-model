@@ -2,10 +2,7 @@
 # Author: Arvin Javaheripur
 # Date: 2026-03-5
 # License: GNU General Public License v3.0
-# Description: A simulation of the solar system with planets orbiting around the Sun.
-# The program uses Pygame to render the solar system model and allows zooming and panning for better visualization.
-#
-# Copyright (C) 2026 Arvin Javaheripur
+# Description: Copyright (C) 2026 Arvin Javaheripur
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,14 +23,22 @@ import numpy as np
 import matplotlib
 import os
 import sys
-matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import re
 from math import e
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+intenv = False
+try:
+	__file__
+except:
+	intenv = True
+	print("!")
 
+if not intenv:
+	os.chdir(os.path.dirname(os.path.abspath(__file__)))
+	matplotlib.use("TkAgg")
+    
 
 # ==========================
 # Model functions
@@ -56,11 +61,14 @@ def format_equation(name, params=None):
         if name == "Linear":
             m, b = params
             b_sign = "+" if b >= 0 else "-"
+			b = abs(b)
             return f"y = {m:.5f}x {b_sign} {b:.5f}"
         elif name == "Quadratic":
             a, b, c = params
             b_sign = "+" if b >= 0 else "-"
             c_sign = "+" if c >= 0 else "-"
+			b = abs(b)
+			c = abs(c)
             return f"y = {a:.5f}x² {b_sign} {b:.5f}x {c_sign} {c:.5f}"
         elif name == "Exponential":
             a, b = params
@@ -69,6 +77,7 @@ def format_equation(name, params=None):
         elif name == "Logarithmic":
             a, b = params
             b_sign = "+" if b >= 0 else "-"
+			b = abs(b)
             return f"y = {a:.5f} ln(x) {b_sign} {b:.5f}"
         else:
             return "Unknown model"
@@ -268,8 +277,11 @@ def plot_model(name, func, params, r2):
         plt.ylabel("Residual")
 
         plt.tight_layout()
-        plt.show(block=False)
-        plt.pause(0.1)
+		if intenv:
+			plt.show()
+		else:
+			plt.show(block=False)
+			plt.pause(0.1)
 
     except Exception as e:
         print(f"[!] Error plotting model {name}: {e}")
